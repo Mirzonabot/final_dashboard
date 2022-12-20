@@ -1,0 +1,66 @@
+body{
+    background-color: rgb(124, 155, 136);
+    padding: 5px 150px 10px 150px;
+}
+
+.header {
+    text-align: center;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    background-color: rgb(130, 196, 155);
+    border-radius: 50px;
+}
+
+
+.joblist{
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    background-color: rgb(130, 196, 155);
+    margin-bottom: 10px;
+}
+
+.joblistlabel {
+    width: 25%;
+    padding: 10px;
+}
+
+#input1 {
+    width: 73%;
+    padding-right: 10px;
+}
+
+.sliders {
+    display: flex;
+}
+
+#minimum, #maximum {
+    width: 100%;
+    justify-content: space-between;
+}
+
+/* .minimum, .maximum {
+    width: 40%;
+} */
+
+.sliderss {
+    background-color: rgb(130, 196, 155);
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 10px;
+}
+
+.years {
+    display: flex;
+    background-color: rgb(130, 196, 155);
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 10px;
+}
+
+
+#years {
+    width: 80%;
+
+}
+
