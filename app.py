@@ -54,9 +54,9 @@ def scrape_data():
     df['Same period 2021'] = df['Same period 2021'].str.replace(',', '')
     df['Same period 2021'] = df['Same period 2021'].str.replace(
         '-', '0').astype(float)
-    df['6 months to20 Dec 2022'] = df['6 months to20 Dec 2022'].str.replace(
+    df['6 months to21 Dec 2022'] = df['6 months to21 Dec 2022'].str.replace(
         '£', '')
-    df['6 months to20 Dec 2022'] = df['6 months to20 Dec 2022'].str.replace(
+    df['6 months to21 Dec 2022'] = df['6 months to21 Dec 2022'].str.replace(
         ',', '').astype(float)
     df['Same period 2020'] = df['Same period 2020'].str.replace('£', '')
     df['Same period 2020'] = df['Same period 2020'].str.replace(
@@ -151,7 +151,7 @@ app.layout = html.Div(
             dcc.Dropdown(years,
 
                          value='all',
-                         placeholder="6 months to20 Dec 2022",
+                         placeholder="6 months to21 Dec 2022",
                          id="years"
                          ),
         ],className="years"),
@@ -200,7 +200,7 @@ def update_output(value1, value2):
 )
 def update_output(value1):
     if value1 == "all" or value1 == None:
-        y = forth["6 months to20 Dec 2022"]
+        y = forth["6 months to21 Dec 2022"]
     else:
         y = update_dataframe3(value1)
     fig = go.Figure()
