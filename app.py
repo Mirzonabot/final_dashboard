@@ -21,8 +21,16 @@ data_employee_job = pd.read_sql("SELECT employees.first_name, jobs.job_title " +
                                 "INNER JOIN jobs ON employees.job_id " +
                                 "= jobs.job_id", con)
 
+def clean_column(element_of_column):
+    if element_of_column == "-":
+        return 0
+    else:
+        element_of_column = element_of_column[1:]
+        element_of_column = element_of_column.replace(",","")
+        return float(element_of_column)
 
 def scrape_data():
+    global hdds
     URL = "https://www.itjobswatch.co.uk/jobs/uk/sqlite.do"
     r = requests.get(URL)
     soup = BeautifulSoup(r.content, 'html5lib')
@@ -50,17 +58,26 @@ def scrape_data():
     df.columns = hd
     df.set_index("index", inplace=True)
     df.reset_index(inplace=True)
-    df['Same period 2021'] = df['Same period 2021'].str.replace('£', '')
-    df['Same period 2021'] = df['Same period 2021'].str.replace(',', '')
-    df['Same period 2021'] = df['Same period 2021'].str.replace(
-        '-', '0').astype(float)
-    df['6 months to21 Dec 2022'] = df['6 months to21 Dec 2022'].str.replace(
-        '£', '')
-    df['6 months to21 Dec 2022'] = df['6 months to21 Dec 2022'].str.replace(
-        ',', '').astype(float)
-    df['Same period 2020'] = df['Same period 2020'].str.replace('£', '')
-    df['Same period 2020'] = df['Same period 2020'].str.replace(
-        ',', '').astype(float)
+    # print("here is the dataframe")
+    # print(df)
+    # print(df.columns.tolist())
+    hdds = df.columns.tolist()[1:]
+    # print(hdds)
+
+    for i in hdds:
+        df[i] = df[i].apply(clean_column)
+
+    # df['Same period 2021'] = df['Same period 2021'].str.replace('£', '')
+    # df['Same period 2021'] = df['Same period 2021'].str.replace(',', '')
+    # df['Same period 2021'] = df['Same period 2021'].str.replace(
+    #     '-', '0').astype(float)
+    # df['6 months to21 Dec 2022'] = df['6 months to21 Dec 2022'].str.replace(
+    #     '£', '')
+    # df['6 months to21 Dec 2022'] = df['6 months to21 Dec 2022'].str.replace(
+    #     ',', '').astype(float)
+    # df['Same period 2020'] = df['Same period 2020'].str.replace('£', '')
+    # df['Same period 2020'] = df['Same period 2020'].str.replace(
+    #     ',', '').astype(float)
 
     df.loc[4] = ['Average', avg_salary, avg_salary, avg_salary]
 
@@ -151,7 +168,7 @@ app.layout = html.Div(
             dcc.Dropdown(years,
 
                          value='all',
-                         placeholder="6 months to21 Dec 2022",
+                         placeholder=hdds[0],
                          id="years"
                          ),
         ],className="years"),
@@ -200,7 +217,7 @@ def update_output(value1, value2):
 )
 def update_output(value1):
     if value1 == "all" or value1 == None:
-        y = forth["6 months to21 Dec 2022"]
+        y = forth[hdds[0]]
     else:
         y = update_dataframe3(value1)
     fig = go.Figure()
